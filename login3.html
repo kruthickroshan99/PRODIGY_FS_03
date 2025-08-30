@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chennai Spice Bazaar - Local E-commerce Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2acaff 0%, #c3eeff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            min-height: 100vh;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(45deg, #53dafc, #a7f0ff);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .cart-icon {
+            position: relative;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #69d7ff;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Main Content Styles */
+        main {
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(254, 202, 87, 0.1));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff6b6b' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #a6f0ff, #0db6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Filter and Sort Styles */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-filter {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box, .filter-select, .sort-select {
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box:focus, .filter-select:focus, .sort-select:focus {
+            outline: none;
+            border-color: #6bceff;
+            box-shadow: 0 0 0 3px rgba(107, 193, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Product Grid Styles */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, #0aceff, #d5f7ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #6be1ff;
+            margin-bottom: 1rem;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #feca57;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #6bcbff, #baeeff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Shopping Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .cart-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: #f9f9f9;
+        }
+
+        .cart-total {
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #6be1ff;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #6be1ff, #ade4ff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Order Tracking Styles */
+        .order-tracking {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .tracking-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .tracking-steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e0e0e0;
+            z-index: 1;
+        }
+
+        .step {
+            background: white;
+            border: 3px solid #e0e0e0;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .step.completed {
+            background: #ff6b6b;
+            border-color: #ff6b6b;
+            color: white;
+        }
+
+        .step.active {
+            border-color: #feca57;
+            background: #feca57;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .review-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s ease;
+        }
+
+        .review-item:hover {
+            background: #f9f9f9;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .review-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Support Chat */
+        .support-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .support-chat:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-filter {
+                justify-content: center;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tracking-steps {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .tracking-steps::before {
+                display: none;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">Chennai Spice Bazaar</div>
+                <ul class="nav-links">
+                    <li><a href="#home" onclick="showSection('home')">Home</a></li>
+                    <li><a href="#products" onclick="showSection('products')">Products</a></li>
+                    <li><a href="#tracking" onclick="showSection('tracking')">Track Order</a></li>
+                    <li><a href="#reviews" onclick="showSection('reviews')">Reviews</a></li>
+                </ul>
+                <div class="cart-icon" onclick="openCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Home Section -->
+            <section id="home" class="section">
+                <div class="hero">
+                    <h1>Welcome to Chennai Spice Bazaar</h1>
+                    <p>Authentic South Indian spices, groceries, and traditional products delivered to your doorstep</p>
+                    <button class="checkout-btn" onclick="showSection('products')" style="width: auto; padding: 15px 30px;">Shop Now</button>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section id="products" class="section">
+                <div class="controls">
+                    <div class="search-filter">
+                        <input type="text" class="search-box" placeholder="Search products..." onkeyup="filterProducts()">
+                        <select class="filter-select" onchange="filterProducts()">
+                            <option value="">All Categories</option>
+                            <option value="spices">Spices</option>
+                            <option value="rice">Rice & Grains</option>
+                            <option value="snacks">Traditional Snacks</option>
+                            <option value="oils">Cooking Oils</option>
+                        </select>
+                    </div>
+                    <select class="sort-select" onchange="sortProducts()">
+                        <option value="name">Sort by Name</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be dynamically loaded here -->
+                </div>
+            </section>
+
+            <!-- Order Tracking Section -->
+            <section id="tracking" class="section hidden">
+                <div class="order-tracking">
+                    <h2>Track Your Order</h2>
+                    <div style="margin: 1rem 0;">
+                        <input type="text" class="search-box" placeholder="Enter Order ID" id="orderIdInput">
+                        <button class="add-to-cart" style="width: auto; margin-left: 1rem; padding: 12px 20px;" onclick="trackOrder()">Track</button>
+                    </div>
+                    
+                    <div id="trackingResult" class="hidden">
+                        <h3>Order #ORD-2025-001</h3>
+                        <p>Estimated Delivery: Tomorrow, 2-4 PM</p>
+                        
+                        <div class="tracking-steps">
+                            <div class="step completed">1</div>
+                            <div class="step completed">2</div>
+                            <div class="step active">3</div>
+                            <div class="step">4</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-top: 1rem;">
+                            <span>Order Placed</span>
+                            <span>Processing</span>
+                            <span style="font-weight: bold;">Out for Delivery</span>
+                            <span>Delivered</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reviews Section -->
+            <section id="reviews" class="section hidden">
+                <div class="reviews-section">
+                    <h2>Customer Reviews</h2>
+                    
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="reviewer-name">Priya Sharma</span>
+                            <div>
+                                <span class="stars">★★★★★</span>
+                                <span class="review-date">Aug 20, 2025</span>
+                            </div>
+                        </div>
+                        <p>"Excellent quality spices! The sambar powder is exactly like my grandmother used to make. Fast delivery to T. Nagar!"</p>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="reviewer-name">Rajesh Kumar</span>
+                            <div>
+                                <span class="stars">★★★★☆</span>
+                                <span class="review-date">Aug 18, 2025</span>
+                            </div>
+                        </div>
+                        <p>"Good selection of traditional products. The idli rice quality is top-notch. Will order again!"</p>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="reviewer-name">Meera Iyer</span>
+                            <div>
+                                <span class="stars">★★★★★</span>
+                                <span class="review-date">Aug 15, 2025</span>
+                            </div>
+                        </div>
+                        <p>"Amazing customer service! They helped me find authentic Chettinad masala powder. Highly recommended!"</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Shopping Cart Modal -->
+        <div id="cartModal" class="cart-modal">
+            <div class="cart-content">
+                <span class="close" onclick="closeCart()">&times;</span>
+                <h2>Shopping Cart</h2>
+                <div id="cartItems"></div>
+                <div class="cart-total" id="cartTotal">Total: ₹0</div>
+                <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+            </div>
+        </div>
+
+        <!-- Support Chat Button -->
+        <button class="support-chat" onclick="openSupport()">💬</button>
+
+        <footer>
+            <p>&copy; 2025 Chennai Spice Bazaar. Serving authentic South Indian products across Chennai.</p>
+            <p>📍 Location: T. Nagar, Chennai | 📞 Call: +91-98765-43210 | 📧 Email: orders@chennaispicebazaar.com</p>
+        </footer>
+    </div>
+
+    <script>
+        // Product data
+        const products = [
+            {
+                id: 1,
+                name: "Premium Sambar Powder",
+                description: "Authentic blend of roasted spices for perfect sambar",
+                price: 180,
+                category: "spices",
+                rating: 4.8,
+                reviews: 124,
+                emoji: "🌶️"
+            },
+            {
+                id: 2,
+                name: "Traditional Idli Rice",
+                description: "Premium quality parboiled rice for soft idlis",
+                price: 320,
+                category: "rice",
+                rating: 4.9,
+                reviews: 89,
+                emoji: "🍚"
+            },
+            {
+                id: 3,
+                name: "Murukku Mix Pack",
+                description: "Crispy traditional snacks - 5 varieties pack",
+                price: 280,
+                category: "snacks",
+                rating: 4.6,
+                reviews: 156,
+                emoji: "🥨"
+            },
+            {
+                id: 4,
+                name: "Cold Pressed Coconut Oil",
+                description: "Pure, unrefined coconut oil - 500ml",
+                price: 450,
+                category: "oils",
+                rating: 4.7,
+                reviews: 73,
+                emoji: "🥥"
+            },
+            {
+                id: 5,
+                name: "Rasam Powder",
+                description: "Traditional South Indian rasam masala",
+                price: 160,
+                category: "spices",
+                rating: 4.5,
+                reviews: 91,
+                emoji: "🌿"
+            },
+            {
+                id: 6,
+                name: "Basmati Rice Premium",
+                description: "Long grain aromatic basmati rice - 1kg",
+                price: 380,
+                category: "rice",
+                rating: 4.4,
+                reviews: 67,
+                emoji: "🌾"
+            },
+            {
+                id: 7,
+                name: "Banana Chips Variety",
+                description: "Kerala style banana chips - spicy & sweet",
+                price: 220,
+                category: "snacks",
+                rating: 4.3,
+                reviews: 134,
+                emoji: "🍌"
+            },
+            {
+                id: 8,
+                name: "Sesame Oil",
+                description: "Cold pressed gingelly oil - 500ml",
+                price: 380,
+                category: "oils",
+                rating: 4.6,
+                reviews: 82,
+                emoji: "🫒"
+            }
+        ];
+
+        // Shopping cart
+        let cart = [];
+        let currentSection = 'home';
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            displayProducts();
+            updateCartCount();
+        });
+
+        // Section navigation
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.add('hidden'));
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionName);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                currentSection = sectionName;
+            }
+        }
+
+        // Display products
+        function displayProducts(productsToShow = products) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            
+            productsToShow.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">${product.emoji}</div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-rating">
+                            <span class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}</span>
+                            <span class="rating-text">${product.rating} (${product.reviews} reviews)</span>
+                        </div>
+                        <div class="product-price">₹${product.price}</div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                    </div>
+                `;
+                grid.appendChild(productCard);
+            });
+        }
+
+        // Filter products
+        function filterProducts() {
+            const searchTerm = document.querySelector('.search-box').value.toLowerCase();
+            const categoryFilter = document.querySelector('.filter-select').value;
+            
+            let filteredProducts = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
+                                    product.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = categoryFilter === '' || product.category === categoryFilter;
+                return matchesSearch && matchesCategory;
+            });
+            
+            displayProducts(filteredProducts);
+        }
+
+        // Sort products
+        function sortProducts() {
+            const sortBy = document.querySelector('.sort-select').value;
+            let sortedProducts = [...products];
+            
+            switch(sortBy) {
+                case 'name':
+                    sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'price-low':
+                    sortedProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    sortedProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    sortedProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+            }
+            
+            displayProducts(sortedProducts);
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            updateCartCount();
+            showNotification(`${product.name} added to cart!`);
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        // Open cart
+        function openCart() {
+            const modal = document.getElementById('cartModal');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            cartItems.innerHTML = '';
+            let total = 0;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; padding: 2rem; color: #666;">Your cart is empty</p>';
+            } else {
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <div>
+                            <h4>${item.name}</h4>
+                            <p>₹${item.price} x ${item.quantity}</p>
+                        </div>
+                        <div>
+                            <button onclick="updateQuantity(${item.id}, -1)" style="background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 5px; margin: 0 5px; cursor: pointer;">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" style="background: #2ed573; color: white; border: none; padding: 5px 10px; border-radius: 5px; margin: 0 5px; cursor: pointer;">+</button>
+                            <button onclick="removeFromCart(${item.id})" style="background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 5px; margin-left: 10px; cursor: pointer;">Remove</button>
+                        </div>
+                    `;
+                    cartItems.appendChild(cartItem);
+                });
+            }
+            
+            cartTotal.innerHTML = `Total: ₹${total}`;
+            modal.style.display = 'block';
+        }
+
+        // Close cart
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        // Update quantity
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartCount();
+                    openCart(); // Refresh cart display
+                }
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartCount();
+            openCart(); // Refresh cart display
+        }
+
+        // Checkout
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const orderData = {
+                items: cart,
+                total: total,
+                orderId: 'ORD-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 1000)).padStart(3, '0'),
+                date: new Date().toLocaleDateString('en-IN'),
+                status: 'confirmed'
+            };
+            
+            // Store order in memory (in real app, would send to server)
+            window.currentOrder = orderData;
+            
+            showNotification(`Order placed successfully! Order ID: ${orderData.orderId}`);
+            cart = [];
+            updateCartCount();
+            closeCart();
+            
+            // Auto show tracking section
+            setTimeout(() => {
+                showSection('tracking');
+                document.getElementById('orderIdInput').value = orderData.orderId;
+                trackOrder();
+            }, 2000);
+        }
+
+        // Track order
+        function trackOrder() {
+            const orderId = document.getElementById('orderIdInput').value;
+            const trackingResult = document.getElementById('trackingResult');
+            
+            if (!orderId) {
+                showNotification('Please enter an order ID');
+                return;
+            }
+            
+            // Simulate order tracking (in real app, would fetch from server)
+            if (orderId === 'ORD-2025-001' || (window.currentOrder && orderId === window.currentOrder.orderId)) {
+                trackingResult.classList.remove('hidden');
+                
+                // Update tracking info if it's the current order
+                if (window.currentOrder && orderId === window.currentOrder.orderId) {
+                    trackingResult.innerHTML = `
+                        <h3>Order #${window.currentOrder.orderId}</h3>
+                        <p>Order Date: ${window.currentOrder.date}</p>
+                        <p>Total: ₹${window.currentOrder.total}</p>
+                        <p>Status: Processing</p>
+                        <p>Estimated Delivery: Tomorrow, 2-4 PM</p>
+                        
+                        <div class="tracking-steps">
+                            <div class="step completed">1</div>
+                            <div class="step active">2</div>
+                            <div class="step">3</div>
+                            <div class="step">4</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-top: 1rem;">
+                            <span>Order Placed</span>
+                            <span style="font-weight: bold;">Processing</span>
+                            <span>Out for Delivery</span>
+                            <span>Delivered</span>
+                        </div>
+                    `;
+                }
+                showNotification('Order found! Tracking information updated.');
+            } else {
+                showNotification('Order ID not found. Please check and try again.');
+                trackingResult.classList.add('hidden');
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Remove existing notification if any
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Open support chat
+        function openSupport() {
+            showNotification('Customer support chat will be available soon! For immediate assistance, call +91-98765-43210');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target === modal) {
+                closeCart();
+            }
+        }
+
+        // Search on Enter key
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBox = document.querySelector('.search-box');
+            if (searchBox) {
+                searchBox.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        filterProducts();
+                    }
+                });
+            }
+        });
+
+        // Add some sample orders for demo
+        window.sampleOrders = {
+            'ORD-2025-001': {
+                status: 'Out for Delivery',
+                items: ['Premium Sambar Powder', 'Traditional Idli Rice'],
+                total: 500,
+                estimatedDelivery: 'Tomorrow, 2-4 PM'
+            },
+            'ORD-2025-002': {
+                status: 'Delivered',
+                items: ['Murukku Mix Pack', 'Coconut Oil'],
+                total: 730,
+                estimatedDelivery: 'Delivered on Aug 25, 2025'
+            }
+        };
+
+        // Enhanced filter functionality
+        function applyAdvancedFilters() {
+            const searchTerm = document.querySelector('.search-box').value.toLowerCase();
+            const categoryFilter = document.querySelector('.filter-select').value;
+            const sortBy = document.querySelector('.sort-select').value;
+            
+            let filteredProducts = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
+                                    product.description.toLowerCase().includes(searchTerm) ||
+                                    product.category.toLowerCase().includes(searchTerm);
+                const matchesCategory = categoryFilter === '' || product.category === categoryFilter;
+                return matchesSearch && matchesCategory;
+            });
+            
+            // Apply sorting
+            switch(sortBy) {
+                case 'name':
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filteredProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+            }
+            
+            displayProducts(filteredProducts);
+            
+            // Show results count
+            const resultsCount = filteredProducts.length;
+            const existingCount = document.querySelector('.results-count');
+            if (existingCount) {
+                existingCount.remove();
+            }
+            
+            const countElement = document.createElement('div');
+            countElement.className = 'results-count';
+            countElement.style.cssText = 'text-align: center; margin: 1rem 0; color: #666; font-size: 0.9rem;';
+            countElement.textContent = `Showing ${resultsCount} of ${products.length} products`;
+            
+            const grid = document.getElementById('productsGrid');
+            grid.parentNode.insertBefore(countElement, grid);
+        }
+
+        // Enhanced product card interactions
+        function addProductHoverEffects() {
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        }
+
+        // Initialize enhanced features
+        document.addEventListener('DOMContentLoaded', function() {
+            displayProducts();
+            updateCartCount();
+            addProductHoverEffects();
+            
+            // Add event listeners for real-time filtering
+            const searchBox = document.querySelector('.search-box');
+            const categoryFilter = document.querySelector('.filter-select');
+            const sortSelect = document.querySelector('.sort-select');
+            
+            if (searchBox) {
+                searchBox.addEventListener('input', applyAdvancedFilters);
+            }
+            if (categoryFilter) {
+                categoryFilter.addEventListener('change', applyAdvancedFilters);
+            }
+            if (sortSelect) {
+                sortSelect.addEventListener('change', applyAdvancedFilters);
+            }
+        });
+
+        // Add loading animation for better UX
+        function showLoading() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '<div style="text-align: center; padding: 3rem; font-size: 1.2rem; color: #666;">Loading products...</div>';
+        }
+
+        // Simulate network delay for demonstration
+        function simulateNetworkDelay(callback, delay = 500) {
+            showLoading();
+            setTimeout(callback, delay);
+        }
+
+        // Enhanced checkout with form validation
+        function enhancedCheckout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!');
+                return;
+            }
+            
+            // Create checkout modal
+            const checkoutModal = document.createElement('div');
+            checkoutModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1002;
+            `;
+            
+            checkoutModal.innerHTML = `
+                <div style="background: white; padding: 2rem; border-radius: 15px; max-width: 500px; width: 90%;">
+                    <h2>Checkout</h2>
+                    <form id="checkoutForm">
+                        <input type="text" placeholder="Full Name" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+                        <input type="email" placeholder="Email" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+                        <input type="tel" placeholder="Phone Number" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+                        <textarea placeholder="Delivery Address" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; min-height: 80px;"></textarea>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <button type="submit" style="flex: 1; padding: 12px; background: linear-gradient(45deg, #ff6b6b, #feca57); color: white; border: none; border-radius: 8px; cursor: pointer;">Place Order</button>
+                            <button type="button" onclick="this.closest('.checkout-modal').remove()" style="flex: 1; padding: 12px; background: #ccc; color: #333; border: none; border-radius: 8px; cursor: pointer;">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            checkoutModal.className = 'checkout-modal';
+            document.body.appendChild(checkoutModal);
+            
+            // Handle form submission
+            document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                checkout();
+                checkoutModal.remove();
+            });
+        }
+    </script>
+</body>
+</html>
