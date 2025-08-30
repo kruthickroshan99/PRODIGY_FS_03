@@ -1,4 +1,4 @@
-# Build a Chennai Spice Bazaar E-commerce Website
+# Build a E-commerce Website
 
 ## Description
 
