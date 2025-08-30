@@ -21,12 +21,12 @@ Create an e-commerce website for a local store in Chennai, enabling customers to
 
 1. Clone this repository:
    ```
-   https://github.com/username/chennai-spice-bazaar-ecommerce
+   https://github.com/kruthickroshan99/PRODIGY_FS_03
    ```
 
 2. Run the application:
    ```
-   open index.html
+   open main.html
    ```
 
 3. Browse products, add to cart, and experience the complete e-commerce journey using the intuitive UI.
