@@ -33,7 +33,23 @@ Create an e-commerce website for a local store in Chennai, enabling customers to
 
 ## Screenshots
 
-*Screenshots will be added here to demonstrate the product catalog, shopping cart, order tracking interface, and mobile responsiveness.*
+## Screenshots
+
+### Home Page
+(<img width="1897" height="914" alt="Screenshot 2025-08-30 152952" src="https://github.com/user-attachments/assets/0f08a458-dd21-4bf0-8ba7-e654bcd94c6d" />
+)
+
+### Product Page
+(<img width="1899" height="912" alt="Screenshot 2025-08-30 153006" src="https://github.com/user-attachments/assets/9f2ad686-0b47-4634-8568-151d04190dde" />
+)
+
+### My Order Page
+(<img width="1895" height="912" alt="Screenshot 2025-08-30 153030" src="https://github.com/user-attachments/assets/7f4068d2-c33d-4ed0-beab-2c6f95a78dd5" />
+)
+
+## Cart Page
+(<img width="1896" height="906" alt="Screenshot 2025-08-30 153048" src="https://github.com/user-attachments/assets/3eba5226-c33d-4f72-8b1f-acd0fe9fb302" />
+)
 
 ## Technology Stack
 
